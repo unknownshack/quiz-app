@@ -6,7 +6,7 @@ class Register extends React.Component {
     render() {
         return (
             <div>
-                <button type="button" id="learn-more" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                <button type="button" id="registerBtn" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                     Register your interest
                 </button>
 
