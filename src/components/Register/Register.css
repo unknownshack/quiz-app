@@ -1,0 +1,31 @@
+.modal {
+    color: #000000;
+}
+
+.title {
+    width: 80%;
+    display: inline-block;
+    text-align: left;
+}
+
+.form-group {
+    margin: 4%;
+}
+
+label {
+    margin-right: 2%;
+}
+
+.option {
+    width: 100%;
+}
+
+.modal-button {
+    width: auto;
+    height: auto;
+}
+
+#learn-more{
+    width: 10rem;
+    height:3rem;
+}
