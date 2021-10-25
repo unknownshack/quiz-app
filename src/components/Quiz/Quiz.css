@@ -1,0 +1,89 @@
+body {
+    background-color: rgba(22, 3, 41);
+    color: #ffffff;
+}
+
+.container {
+    width: 100%;
+    height: auto;
+    /* border: 1.5px solid black; */
+    margin: 2% auto;
+    padding: 0;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    flex-direction: column;
+}
+
+.instruction-title {
+    margin-top: 2.5%;
+}
+
+.instruction-points {
+    width: 80%;
+    height: auto;
+    margin: 2% auto;
+    padding: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    flex-direction: column;
+    text-align: left;
+}
+
+.instruction-points ul {
+    width: auto;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    flex-direction: column;
+}
+
+.instruction-points ul li {
+    width: 100%;
+    height: auto;
+    padding: 1.5%;
+}
+
+.button, .btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    flex-direction: column;
+    margin: 1.5%;
+}
+
+.question-section {
+    white-space: pre-wrap;
+}
+
+.answer {
+    color: #ffffff;
+}
+
+.answer:hover {
+    color: #00ff00;
+}
+
+.answer-img:hover {
+    cursor: pointer;
+    background-color: antiquewhite;
+}
+
+.registerInterest {
+    width: auto;
+    height: 100%;
+    margin: 2.5% auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
