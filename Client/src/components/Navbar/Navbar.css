@@ -1,0 +1,15 @@
+.container-fluid {
+    padding: 1% 4%;
+}
+
+.userManagenent {
+
+    flex-grow: 0;
+
+}
+
+.fullscreen{
+    
+    height: 100vh;
+    background-color: rgba(22, 3, 41);
+}

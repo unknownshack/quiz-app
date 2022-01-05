@@ -1,0 +1,36 @@
+.banner {
+    width: auto;
+    height: auto;
+    background-color: rgba(22, 3, 41);
+    margin-top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    flex-direction: column;
+    flex-wrap: wrap;   
+}
+
+.aiqLogo {
+    width: 500px;
+    height: auto;
+}
+
+.buttons {
+    width: auto;
+    height: 100%;
+    margin: 2.5% auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.registerbtn {
+    width: 15em;
+    height: 5em;
+    margin: 1%;
+    font-weight: bold;
+}
