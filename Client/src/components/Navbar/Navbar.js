@@ -1,25 +1,32 @@
 // Use React Hooks' useState
 import React from 'react';
 import { Link, Outlet } from 'react-router-dom';
-import { useState } from "react";
-import { logout, selectUser } from "../redux/userSlice";
+import { useState, useEffect } from "react";
+import { login, logout, selectUser } from "../redux/userSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { If, Then, ElseIf, Else } from 'react-if-elseif-else-render';
-
+import { useNavigate } from "react-router-dom";
 import './Navbar.css';
 
 const Navbar = () => {
 
     const [isOpen, setisOpen] = useState(false);
+    const [user,setuser] = useState(useSelector(selectUser));
 
-
-    const user = useSelector(selectUser);
+    //const user = useSelector(selectUser);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+
 
     const onlogout = () => {
         dispatch(
             logout()
         );
+
+        localStorage.clear();
+        setuser({name:null});
+        navigate('/');
+
     }
 
 
@@ -32,6 +39,22 @@ const Navbar = () => {
     }
 
 
+    //stay logged in
+    useEffect(() => {
+
+        if(localStorage.getItem("loginData") ){
+            if(!user.name){
+
+                let data = JSON.parse(localStorage.getItem("loginData"));
+                dispatch(
+                    login(data)
+                );
+
+                setuser(data);
+            }
+        }
+
+    });
 
 
     return (
@@ -99,7 +122,7 @@ const Navbar = () => {
                                             <Link
                                                 className='nav-link'
                                                 aria-current="page"
-                                                to='/account'
+                                                to='/myaccount'
                                             >
                                                 Hello {user.name}
                                             </Link>

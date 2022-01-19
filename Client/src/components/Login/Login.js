@@ -1,11 +1,12 @@
 
 import React from 'react';
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import logo from '../Home/updated-aiq-logo.png';
 import './Login.css';
 import Register from '../Register/Register';
 import { login } from "../redux/userSlice";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 function Login(props) {
 
@@ -14,6 +15,8 @@ function Login(props) {
     const [loginMessage, setloginMessage] = useState("");
 
     const dispatch = useDispatch();
+
+    const navigate = useNavigate();
 
     const callLogin = (e) => {
 
@@ -42,14 +45,26 @@ function Login(props) {
 
                     dispatch(
                         login({
-                            //uid:data[0].UID,
+                            uid:data[0]._id,
                             name: data[0].name,
                             mobile: data[0].mobile,
                             email:data[0].Email,
                             loggedIn: "true",
                         })
-
                     );
+
+                    localStorage.setItem('loginData',
+                    JSON.stringify({
+                        uid:data[0]._id,
+                        name: data[0].name,
+                        mobile: data[0].mobile,
+                        email:data[0].Email,
+                        loggedIn: "true",
+                    }));
+
+
+                    navigate('/myaccount');
+
                 }
 
             });

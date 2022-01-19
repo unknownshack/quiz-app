@@ -5,6 +5,8 @@ import Navbar from '../Navbar/Navbar';
 import Home from '../Home/Home';
 import Login from '../Login/Login';
 import Quiz from '../Quiz/Quiz';
+import MyQuiz from '../MyQuiz/MyQuiz';
+import MyAccount from '../MyAccount/MyAccount';
 
 export default function App() {
   return (
@@ -16,6 +18,8 @@ export default function App() {
             <Route index element={<Home />} />
             <Route path = "login" element={<Login />} />
             <Route path = "quiz" element={<Quiz />} />
+            <Route path = "myquiz/*" element={<MyQuiz />}/>
+            <Route path = "myaccount" element={<MyAccount />} />
           </Route>
         </Routes>
 
