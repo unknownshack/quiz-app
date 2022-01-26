@@ -12,24 +12,25 @@ const Navbar = () => {
 
     const [isOpen, setisOpen] = useState(false);
     const [user,setuser] = useState(useSelector(selectUser));
-
     //const user = useSelector(selectUser);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-
+    //Logout function
     const onlogout = () => {
+        //run redux function - logout
         dispatch(
             logout()
         );
 
+        //clear localstorage and refresh the page
         localStorage.clear();
         setuser({name:null});
         navigate('/');
 
     }
 
-
+    
     const handleButtonClick = () => {
         if (isOpen) {
             setisOpen(false);
@@ -39,17 +40,15 @@ const Navbar = () => {
     }
 
 
-    //stay logged in
+    //this function run immediately after refresh, stay logged in
     useEffect(() => {
 
         if(localStorage.getItem("loginData") ){
             if(!user.name){
-
                 let data = JSON.parse(localStorage.getItem("loginData"));
                 dispatch(
                     login(data)
                 );
-
                 setuser(data);
             }
         }
@@ -148,9 +147,8 @@ const Navbar = () => {
                                     </div>
                                 </Else>
                             </If>
+                            
                         </div>
-
-
                     </div>
                 </div>
             </nav>

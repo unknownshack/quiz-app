@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+//create globle variable user and login,logout function
 export const userSlice = createSlice({
 
     name : "user",

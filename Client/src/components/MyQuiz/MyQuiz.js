@@ -14,7 +14,7 @@ import SpeechRecog from '../SpeechRecog/SpeechRecog';
 // Drawing feature component
 import Canvas from '../Canvas/Canvas';
 
-
+// MyQuiz page
 function MyQuiz(props) {
 
     const location = useLocation();
@@ -32,9 +32,6 @@ function MyQuiz(props) {
     const [ questionNumber, setquestionNumber] = useState(1);
     const [ totalPoints, settotalPoints] = useState(0);
     const [ answerStyle, setanswerStyle] = useState("btn border border-light border-2 answer");
-
-
-
 
 
     const generateRandomQuestion = ()=> {
@@ -56,8 +53,6 @@ function MyQuiz(props) {
     const componentDidMount = ()=> {
 
         let Quiz_id = location.pathname.split("/")[2]
-
-
 
         //return Quiz_id;
 
@@ -112,8 +107,6 @@ function MyQuiz(props) {
             setcurrentQuestionTime(questionTime);
             setquestionNumber(questionNumber + 1);
             setanswerStyle( 'btn border border-light answer');
-        
-         
         }
     }
 
@@ -285,18 +278,10 @@ function MyQuiz(props) {
                         >
                             Next
                         </button>
-
-
                     </div>
                 </div>
-
-            </div>
-
-
-            
-
+            </div>         
         </div>
-
 
     )
 }

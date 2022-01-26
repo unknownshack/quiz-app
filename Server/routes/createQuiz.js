@@ -1,15 +1,14 @@
+//This page is related to the create quiz function from client
+
 var express = require('express');
 var router = express.Router();
-
-/* GET users listing. */
 var mongoose = require('mongoose');
-var Quiz = require('../models/quiz.js');
-
+var Quiz = require('../models/quiz.js'); // get Quiz schema
 var bodyParser = require('body-parser');
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 
-
+// generate a list of random quiz index
 function getRandomQuestions(quantity, max){
     const set = new Set();
 
@@ -23,15 +22,15 @@ function getRandomQuestions(quantity, max){
 router.post('/', urlencodedParser, function(req, res, next) {
 
     let userID = req.body.uid;
-
+    // create new quiz
     var quiz = new Quiz({
         _id: new mongoose.Types.ObjectId(),
         userID:userID,
         Date:Date.now(),
-        questionList:getRandomQuestions(10,100),        //set to random later
+        questionList:getRandomQuestions(10,100),        //! set to random later
     
       });
-
+      // save quiz into database
       quiz
       .save()
       .then(result=>{
@@ -42,7 +41,6 @@ router.post('/', urlencodedParser, function(req, res, next) {
         console.log(err);
         res.send({message: 'create quiz failed'});
       });
-
 
 });
 

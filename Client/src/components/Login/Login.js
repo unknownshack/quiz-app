@@ -8,6 +8,7 @@ import { login } from "../redux/userSlice";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
+// The login page
 function Login(props) {
 
     const [Email, setEmail] = useState("");
@@ -15,12 +16,12 @@ function Login(props) {
     const [loginMessage, setloginMessage] = useState("");
 
     const dispatch = useDispatch();
-
     const navigate = useNavigate();
 
+    //Login Function
     const callLogin = (e) => {
 
-
+        // Send post request to server
         fetch("http://localhost:8000/login", {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -43,6 +44,7 @@ function Login(props) {
                     console.log(data[0]);
                     setloginMessage({ message: "login successfully" });
 
+                    //redux function - Set globle variable user to our fetched user
                     dispatch(
                         login({
                             uid:data[0]._id,
@@ -53,6 +55,7 @@ function Login(props) {
                         })
                     );
 
+                    //using localstorage to persist login after refresh
                     localStorage.setItem('loginData',
                     JSON.stringify({
                         uid:data[0]._id,
@@ -62,7 +65,7 @@ function Login(props) {
                         loggedIn: "true",
                     }));
 
-
+                    // jump to myaccount page
                     navigate('/myaccount');
 
                 }
@@ -73,8 +76,6 @@ function Login(props) {
     return (
 
         <div className='banner'>
-
-
             <img src={logo} className='aiqLogo' alt='AIQ Logo' />
 
             <div className='login-wrap'>

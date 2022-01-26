@@ -1,3 +1,6 @@
+// this page is not using for now
+// it can be used to check if the our server is working
+
 var express = require('express');
 var router = express.Router();
 

@@ -8,6 +8,7 @@ import Quiz from '../Quiz/Quiz';
 import MyQuiz from '../MyQuiz/MyQuiz';
 import MyAccount from '../MyAccount/MyAccount';
 
+//Define routes
 export default function App() {
   return (
 

@@ -1,3 +1,5 @@
+//Define Mongoose quiz schema
+
 var mongoose = require('mongoose');
 var userSchema = mongoose.Schema({
 

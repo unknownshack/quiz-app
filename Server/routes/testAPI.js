@@ -1,3 +1,6 @@
+// this page is not using for now
+// it can be used to get all users from database
+
 var express = require("express");
 var router = express.Router();
 

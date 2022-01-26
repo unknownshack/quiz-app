@@ -43,7 +43,7 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-//mongodb connection
+//mongodb connection, see mongodb collections in the Server/models folder
 var mongoose = require('mongoose')
 var url = "mongodb+srv://Henan:cecilia1996@ppc.x8ose.mongodb.net/UserDB?retryWrites=true&w=majority";
 
