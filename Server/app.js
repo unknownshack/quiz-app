@@ -45,8 +45,8 @@ app.use(function(err, req, res, next) {
 
 //mongodb connection, see mongodb collections in the Server/models folder
 var mongoose = require('mongoose')
-var url = "mongodb+srv://Henan:cecilia1996@ppc.x8ose.mongodb.net/UserDB?retryWrites=true&w=majority";
-
+//var url = "mongodb+srv://Henan:cecilia1996@ppc.x8ose.mongodb.net/UserDB?retryWrites=true&w=majority";
+var url = "mongodb+srv://mettle:w2k_pass@ppc.ncydd.mongodb.net/myCollections?retryWrites=true&w=majority";
 //var url = 'mongodb://127.0.0.1:27017'; not using local mongodb service
 
 const options = {
