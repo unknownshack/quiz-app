@@ -19,8 +19,8 @@ class TextToSpeech extends React.Component {
         };
 
         // If there's an error
-        utterThis.onerror = e => console.error('An error encountered');
-
+        //utterThis.onerror = e => console.error('An error encountered');
+        utterThis.onerror = e => console.log(e);
         // Set rate and pitch for reader's voice
         utterThis.rate = 1.25;
         utterThis.pitch = 1;
@@ -31,12 +31,16 @@ class TextToSpeech extends React.Component {
 
     componentDidMount() {
         // Immediately reads the first question
+        console.log("speak 1");
         this.speak();
     }
 
-    componentDidUpdate() {
+    componentDidUpdate(prevProps) {
         //  Immediately reads the question after the Next button is clicked
-        this.speak();
+        if (this.props.text !== prevProps.text) {
+            console.log("speak 2");
+            this.speak();
+        }
     }
 
     render() {

@@ -27,14 +27,14 @@ router.post('/', urlencodedParser, function(req, res, next) {
         _id: new mongoose.Types.ObjectId(),
         userID:userID,
         Date:Date.now(),
-        questionList:getRandomQuestions(10,100),        //! set to random later
-    
+        //questionList:getRandomQuestions(10,100),        //! set to random later
+        questionList:[0,1,2,3,4,5,6,7,8,9], 
       });
       // save quiz into database
       quiz
       .save()
       .then(result=>{
-        console.log(result);
+        //console.log(result);
         res.send(result);
       })
       .catch(err=>{

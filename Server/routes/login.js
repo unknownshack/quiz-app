@@ -2,7 +2,6 @@
 
 var express = require('express');
 var router = express.Router();
-var router = express.Router();
 var User = require('../models/user.js');
 var bodyParser = require('body-parser');
 //const { ConnectionClosedEvent } = require('mongodb');

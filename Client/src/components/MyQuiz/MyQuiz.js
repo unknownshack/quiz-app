@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 
 
 import '../Quiz/Quiz.css';
-import questions from '../Quiz/Questions';
+//import questions from '../Quiz/Questions';
 import TimerContainer from '../Timer/TimerContainer';
 import Register from '../Register/Register';
 
@@ -19,21 +19,16 @@ function MyQuiz(props) {
 
     const location = useLocation();
 
-    /*
-    const test = ()=>{
-
-        let Quiz_id = location.pathname.split("/")[2]
-        return Quiz_id;
-    }*/
-
-    const [gameOver, setgameOver] = useState(false);
-    const [currentQuestion, setcurrentQuestion] = useState('0');
+    //const [gameOver, setgameOver] = useState(false);
+    const [currentQuestion, setcurrentQuestion] = useState({});
     const [currentQuestionTime, setcurrentQuestionTime] = useState(4);
-    const [ questionNumber, setquestionNumber] = useState(1);
-    const [ totalPoints, settotalPoints] = useState(0);
+    const [ questionNumber, setquestionNumber] = useState(0);
+    //const [ totalPoints, settotalPoints] = useState(0);
     const [ answerStyle, setanswerStyle] = useState("btn border border-light border-2 answer");
 
-
+    const Quiz_id = location.pathname.split("/")[2];
+    
+    /*
     const generateRandomQuestion = ()=> {
         let min = 0;
         let max = questions.length;
@@ -48,15 +43,35 @@ function MyQuiz(props) {
             questions[index].hasBeenAsked = true;
         }
         return index;
+    }*/
+
+    const getQuestion = () =>{
+
+        fetch("http://localhost:8000/getQuestion", {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                Quiz_id: Quiz_id,
+                QuestionNum: questionNumber
+
+            })
+        })
+            .then(res => res.json())
+            .then(data => {
+                setcurrentQuestion(data);
+                
+            });
+
     }
 
-    const componentDidMount = ()=> {
 
-        let Quiz_id = location.pathname.split("/")[2]
+    useEffect(() => {
 
-        //return Quiz_id;
+        getQuestion();
+  
+    },[questionNumber]);
 
-    }
+
 
     const shuffleArray = (array)=> {
         let arrCopy = array.slice(0);
@@ -67,20 +82,20 @@ function MyQuiz(props) {
         return arrCopy;
     }
 
+
     // Handler for when an answer is clicked
     const handleAnswerClick = (answer)=> {
-        let nextQuestion = generateRandomQuestion();
-        let questionNum = questionNumber + 1;
+
+        //let nextQuestion = index; // questionlist[questionnumber+1]
+        //let questionNum = questionNumber + 1;
 
         // Check if answer clicked is correct
-        checkAnswer(answer);
+        //checkAnswer(answer);
 
         // Automatically moves to the next question after a delay
         setTimeout(() => {
-            if (nextQuestion < questions.length) {
-               
-                    setcurrentQuestion(nextQuestion);
-                    setquestionNumber(questionNum);
+            if (questionNumber< 10) {
+                    setquestionNumber(questionNumber+1);
                     setanswerStyle('btn border border-light answer');
                 
             }
@@ -88,6 +103,7 @@ function MyQuiz(props) {
     }
 
     // Checks if answer is correct
+    /*
     const checkAnswer = (answer)=> {
         let newTotal = answer.isCorrect ? totalPoints + 1 : totalPoints;
         let isCorrect = answer.isCorrect ? 'btn btn-success border border-light answer' : 'btn btn-danger border border-light answer';
@@ -96,38 +112,43 @@ function MyQuiz(props) {
         setanswerStyle(isCorrect);
    
     }
-
+*/
+    
     const toNextQuestion = () =>{
-        let nextQuestion = generateRandomQuestion();
+        //let nextQuestion = generateRandomQuestion(); // questionlist[questionnumber+1]
 
         let questionTime = handleQuestionDifficulty();
 
-        if (nextQuestion < questions.length) {
-            setcurrentQuestion(nextQuestion);
+        if (questionNumber < 10) {
+ 
             setcurrentQuestionTime(questionTime);
-            setquestionNumber(questionNumber + 1);
+            setquestionNumber(questionNumber+1);
             setanswerStyle( 'btn border border-light answer');
         }
     }
 
+
+/*
     // Method to call the above method when individual question timer completes
     const handleNextQuestion = ()=> {
         if (questionNumber > questions.length) {
             handleGameOver();
         }
 
-        toNextQuestion();
-    }
+        //toNextQuestion();
+    }*/
 
     // Handler for game's over (time's up) or after last question's asked
+    /*
     const handleGameOver = ()=> {
         setgameOver(true);
-    }
+    }*/
 
+    
     // Handler for different question difficulty
     function handleQuestionDifficulty(){
-        let current_Question = questions[currentQuestion];
-        let difficulty = current_Question.questionType;
+       
+        let difficulty = currentQuestion.questionType;
         let time;
 
         switch (difficulty) {
@@ -147,30 +168,30 @@ function MyQuiz(props) {
         console.log(`${difficulty}: ${time}`);
         return time;
     }
+    
 
 
     return (
 
         <div>
 
-
-            <p>My Quiz Page</p>
+             <p>My Quiz Page</p>
 
             <div>
                 <TimerContainer num={questionNumber} time={30} onComplete={()=>toNextQuestion()} />
-                <p>Question {questionNumber} of {questions.length}</p>
+                <p>Question {questionNumber} of 10 </p>
                 {/* <h5>Points: {this.state.totalPoints}</h5> */}
   
                 <div className='container'>
                     <div className='question-section'>
                         {/* If the question is vocal question type */}
-                        {questions[currentQuestion].isVocalQuestion && <TextToSpeech text={questions[currentQuestion].questionText} />}
+                        {currentQuestion.isVocalQuestion && <TextToSpeech text={currentQuestion.questionText} />}
 
 
                         {/* If question has image */}
-                        {questions[currentQuestion].questionImg && <h3 style={{ color: '#ffffff' }}>{questions[currentQuestion].questionText}</h3>}
-                        {questions[currentQuestion].questionImg && <img
-                            src={questions[currentQuestion].questionImg}
+                        {currentQuestion.questionImg && <h3 style={{ color: '#ffffff' }}>{currentQuestion.questionText}</h3>}
+                        {currentQuestion.questionImg && <img
+                            src={currentQuestion.questionImg}
                             alt='Questionillustration'
                             style={{ margin: 20 }}
                         />
@@ -178,27 +199,27 @@ function MyQuiz(props) {
 
 
                         {/* If question regular multiple choice */}
-                        {questions[currentQuestion].isMultipleChoice && !questions[currentQuestion].questionImg && <h3>{questions[currentQuestion].questionText}</h3>}
+                        {currentQuestion.isMultipleChoice && !currentQuestion.questionImg && <h3>{currentQuestion.questionText}</h3>}
 
                         {/* If question is yes/no, or short-answer, or drawing type */}
-                        {!questions[currentQuestion].isVocalQuestion && (
-                            questions[currentQuestion].isForcedAnswer ||
-                            questions[currentQuestion].isShortAnswer ||
-                            questions[currentQuestion].isDrawingQuestion
+                        {!currentQuestion.isVocalQuestion && (
+                            currentQuestion.isForcedAnswer ||
+                            currentQuestion.isShortAnswer ||
+                            currentQuestion.isDrawingQuestion
                         ) &&
                             <h3 style={{ color: '#ffffff' }}>
-                                {questions[currentQuestion].questionText}
+                                {currentQuestion.questionText}
                             </h3>
                         }
                     </div>
 
                     <div className='answer-section'>
                         {/* If question is a vocal question */}
-                        {questions[currentQuestion].isVocalQuestion && <SpeechRecog />}
+                        {currentQuestion.isVocalQuestion && <SpeechRecog />}
 
 
                         {/* If answer has image in it */}
-                        {questions[currentQuestion].questionImg && shuffleArray(questions[currentQuestion].answers).map((answer, index) => (
+                        {currentQuestion.questionImg && shuffleArray(currentQuestion.answers).map((answer, index) => (
                             <button
                                 type='button'
                                 className={answerStyle}
@@ -221,7 +242,7 @@ function MyQuiz(props) {
 
 
                         {/* If question regular multiple choice */}
-                        {questions[currentQuestion].isMultipleChoice && !questions[currentQuestion].questionImg && shuffleArray(questions[currentQuestion].answers).map((answer, index) => (
+                        {currentQuestion.isMultipleChoice && !currentQuestion.questionImg && shuffleArray(currentQuestion.answers).map((answer, index) => (
                             <button
                                 type='button'
                                 className={answerStyle}
@@ -233,7 +254,7 @@ function MyQuiz(props) {
                         ))}
 
                         {/* If question is yes/no type */}
-                        {questions[currentQuestion].isForcedAnswer && shuffleArray(questions[currentQuestion].answers).map((answer, index) => (
+                        {currentQuestion.isForcedAnswer && shuffleArray(currentQuestion.answers).map((answer, index) => (
                             <div>
                                 <input
                                     type='checkbox'
@@ -252,7 +273,7 @@ function MyQuiz(props) {
 
 
                         {/* If question is drawing type */}
-                        {questions[currentQuestion].isDrawingQuestion && <Canvas />}
+                        {currentQuestion.isDrawingQuestion && <Canvas />}
 
 
                         {/* If question is yes/no, or short-answer, or drawing type */}
@@ -280,7 +301,7 @@ function MyQuiz(props) {
                         </button>
                     </div>
                 </div>
-            </div>         
+            </div>    
         </div>
 
     )

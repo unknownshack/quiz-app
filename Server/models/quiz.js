@@ -7,6 +7,8 @@ var userSchema = mongoose.Schema({
     userID:String,
     Date:Date,
     questionList:[Number],
+    answers:{type:[String], default:[]},
+    score:{type:[Boolean], default:[]}
 
 });
 
