@@ -10,6 +10,8 @@ var testAPIRouter = require("./routes/testAPI");
 var loginRouter = require("./routes/login");
 var createQuiz = require("./routes/createQuiz");
 var getQuestion = require("./routes/getQuestion");
+var getResult = require("./routes/getResult");
+var uploadAnswer = require("./routes/uploadAnswer");
 var app = express();
 
 // view engine setup
@@ -29,6 +31,8 @@ app.use("/testAPI", testAPIRouter);
 app.use("/login", loginRouter);
 app.use("/createQuiz", createQuiz);
 app.use("/getQuestion", getQuestion);
+app.use("/uploadAnswer", uploadAnswer);
+app.use("/getResult",getResult);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

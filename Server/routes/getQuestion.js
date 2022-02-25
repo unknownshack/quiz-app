@@ -12,6 +12,9 @@ router.post('/', urlencodedParser, function (req, res, next) {
     let questionNum = req.body.QuestionNum;
     //questionNum = parseFloat(questionNum);
 
+    console.log("--------------------")
+    console.log(questionNum);
+
     // retrieve user from database
     Quiz.find({ _id: quiz_id })
         .then(docs => {
@@ -31,6 +34,9 @@ router.post('/', urlencodedParser, function (req, res, next) {
                         }
 
                         //console.log(currentQuestion);
+
+                        console.log(currentQuestion);
+
                         res.send(currentQuestion);
 
                     })
@@ -44,6 +50,7 @@ router.post('/', urlencodedParser, function (req, res, next) {
         .catch(err => {
             console.log(err);
         });
+
     //res.end();
 
 

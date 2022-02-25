@@ -1,7 +1,7 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom'
-import { useState, useEffect } from "react";
-
+import { useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 
 import '../Quiz/Quiz.css';
 //import questions from '../Quiz/Questions';
@@ -18,15 +18,18 @@ import Canvas from '../Canvas/Canvas';
 function MyQuiz(props) {
 
     const location = useLocation();
-
+    const navigate = useNavigate();
     //const [gameOver, setgameOver] = useState(false);
     const [currentQuestion, setcurrentQuestion] = useState({});
     const [currentQuestionTime, setcurrentQuestionTime] = useState(4);
     const [ questionNumber, setquestionNumber] = useState(0);
     //const [ totalPoints, settotalPoints] = useState(0);
     const [ answerStyle, setanswerStyle] = useState("btn border border-light border-2 answer");
-
+    const [myAnswers, setmyAnswers] = useState();
     const Quiz_id = location.pathname.split("/")[2];
+
+    var showResult = false;
+    let transcriptRef = useRef();
     
     /*
     const generateRandomQuestion = ()=> {
@@ -58,8 +61,15 @@ function MyQuiz(props) {
         })
             .then(res => res.json())
             .then(data => {
+
+                console.log("set Question");
                 setcurrentQuestion(data);
                 
+            })
+            .catch(err =>{
+
+                console.log(err)
+            
             });
 
     }
@@ -67,6 +77,8 @@ function MyQuiz(props) {
 
     useEffect(() => {
 
+        console.log("getting question");
+        console.log(questionNumber);
         getQuestion();
   
     },[questionNumber]);
@@ -113,17 +125,65 @@ function MyQuiz(props) {
    
     }
 */
+
+    const uploadAnswer = (answer) =>{
+
+        //console.log("current transcript Ref is");
+        //console.log(answer);         
+
+        fetch("http://localhost:8000/uploadAnswer", {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                Quiz_id: Quiz_id,
+                QuestionNum: questionNumber,
+                Answer: answer,
+            })
+        })
+    }
+
+
+
+    const getAnswers = ()=>{
+
+        fetch("http://localhost:8000/getResult", {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                Quiz_id: Quiz_id,
+
+            })
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                setmyAnswers(data.answer);
+                showResult = true;
+            });
+    }
     
     const toNextQuestion = () =>{
         //let nextQuestion = generateRandomQuestion(); // questionlist[questionnumber+1]
 
-        let questionTime = handleQuestionDifficulty();
+        //uploadAnswer(transcriptRef.current);
 
-        if (questionNumber < 10) {
- 
+        if (questionNumber < 4) {
+            let questionTime = handleQuestionDifficulty();
             setcurrentQuestionTime(questionTime);
             setquestionNumber(questionNumber+1);
             setanswerStyle( 'btn border border-light answer');
+
+            //uploadAnswer(transcriptRef.current);
+        }else{
+
+            //showResult = true;
+            //console.log("get answers");
+            //getAnswers();
+            //uploadAnswer(transcriptRef.current);
+            let s = Quiz_id;
+            s = "/myresult/"+s;
+            navigate(s);
+
         }
     }
 
@@ -171,15 +231,16 @@ function MyQuiz(props) {
     
 
 
+
     return (
 
         <div>
 
-             <p>My Quiz Page</p>
+             <h2>My Quiz Page</h2>
 
             <div>
                 <TimerContainer num={questionNumber} time={30} onComplete={()=>toNextQuestion()} />
-                <p>Question {questionNumber} of 10 </p>
+                <p>Question {questionNumber + 1} of 5 </p>
                 {/* <h5>Points: {this.state.totalPoints}</h5> */}
   
                 <div className='container'>
@@ -215,7 +276,7 @@ function MyQuiz(props) {
 
                     <div className='answer-section'>
                         {/* If question is a vocal question */}
-                        {currentQuestion.isVocalQuestion && <SpeechRecog />}
+                        {currentQuestion.isVocalQuestion && <SpeechRecog transcriptRef={transcriptRef}/>}
 
 
                         {/* If answer has image in it */}
@@ -305,6 +366,11 @@ function MyQuiz(props) {
         </div>
 
     )
+
+
+    
 }
 
 export default MyQuiz;
+
+//读太快了 ， 不同的时间，把next取消，

@@ -6,13 +6,20 @@ mic.continuous = true;
 mic.interimResults = true;
 mic.lang = 'en-US';
 
-function SpeechRecog() {
+export default function SpeechRecog({transcriptRef}) {
     const [isListening, setListening] = useState(false);
     const [transcript, setTranscript] = useState(null);
 
     useEffect(() => {
         clickCallback();
     }, [isListening])
+
+
+    useEffect(()=>{
+
+        transcriptRef.current = transcript;
+
+    },[transcript])
 
     const clickCallback = () => {
         if (isListening) {
@@ -66,4 +73,4 @@ function SpeechRecog() {
     );
 }
 
-export default SpeechRecog;
+//export default SpeechRecog;

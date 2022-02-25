@@ -3,7 +3,7 @@
 
 import React from 'react';
 import { selectUser } from "../redux/userSlice";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 // My account page
@@ -15,6 +15,8 @@ function MyAccount(props) {
 
     // create new quiz
     const createQuiz = (e) => {
+
+        console.log("create quiz");
 
         fetch("http://localhost:8000/createQuiz", {
             method: 'POST',
@@ -30,6 +32,11 @@ function MyAccount(props) {
             let s = quiz._id
             s = "/myquiz/"+s;
             navigate(s);
+        
+        })
+        .catch(err =>{
+                
+            console.log(err)
         
         });
     }

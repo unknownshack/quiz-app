@@ -6,6 +6,7 @@ import Home from '../Home/Home';
 import Login from '../Login/Login';
 import Quiz from '../Quiz/Quiz';
 import MyQuiz from '../MyQuiz/MyQuiz';
+import MyResult from '../MyResult/MyResult';
 import MyAccount from '../MyAccount/MyAccount';
 
 //Define routes
@@ -19,7 +20,8 @@ export default function App() {
             <Route index element={<Home />} />
             <Route path = "login" element={<Login />} />
             <Route path = "quiz" element={<Quiz />} />
-            <Route path = "myquiz/*" element={<MyQuiz />}/>
+            <Route path = "myquiz/*" element={<MyQuiz />}/>    
+            <Route path = "myresult/*" element={<MyResult />}/>   
             <Route path = "myaccount" element={<MyAccount />} />
           </Route>
         </Routes>
