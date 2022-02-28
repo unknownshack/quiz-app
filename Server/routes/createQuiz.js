@@ -28,7 +28,7 @@ router.post('/', urlencodedParser, function(req, res, next) {
         userID:userID,
         Date:Date.now(),
         //questionList:getRandomQuestions(10,100),        //! set to random later
-        questionList:[5,6,7,8,9], 
+        questionList:[0,1,2,3,4,5,6,7,8,9], 
       });
       // save quiz into database
       quiz

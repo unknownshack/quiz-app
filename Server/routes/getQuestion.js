@@ -10,10 +10,34 @@ router.post('/', urlencodedParser, function (req, res, next) {
 
     let quiz_id = req.body.Quiz_id;
     let questionNum = req.body.QuestionNum;
+    let answer = req.body.Answer;
     //questionNum = parseFloat(questionNum);
 
-    console.log("--------------------")
-    console.log(questionNum);
+    //console.log("--------------------")
+    //console.log(questionNum);
+
+
+    if (questionNum!= 0){
+
+        if(!answer){
+
+            answer = "";
+        }
+    
+        Quiz.updateOne(
+            { _id: quiz_id },
+            {
+                $push:
+                    {
+                        answers: answer
+                    }
+            }
+        )
+        .catch(err => {
+            console.log(err);
+        });
+    }
+
 
     // retrieve user from database
     Quiz.find({ _id: quiz_id })
@@ -28,14 +52,14 @@ router.post('/', urlencodedParser, function (req, res, next) {
 
                         var currentQuestion = ques[0];
                         
+                        /*
                         for(i in currentQuestion.answers){
                             currentQuestion.answers[i].isCorrect = false;
                         
-                        }
+                        }*/
 
                         //console.log(currentQuestion);
-
-                        console.log(currentQuestion);
+                        //console.log(currentQuestion);
 
                         res.send(currentQuestion);
 
@@ -52,9 +76,6 @@ router.post('/', urlencodedParser, function (req, res, next) {
         });
 
     //res.end();
-
-
-
 
 });
 

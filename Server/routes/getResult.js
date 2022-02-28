@@ -20,7 +20,7 @@ router.post('/', urlencodedParser, function (req, res, next) {
             var answers  = currentQuiz.answers;
 
             
-            /*
+            /* 
             var questionList = currentQuiz.questionList;
       
             var questionTexts = [];
@@ -53,7 +53,6 @@ router.post('/', urlencodedParser, function (req, res, next) {
             }*/
 
             console.log(answers);
-
             res.send({answer: answers});
 
 
