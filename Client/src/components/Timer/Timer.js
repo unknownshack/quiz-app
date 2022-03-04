@@ -15,7 +15,7 @@ class Timer extends React.Component {
                     duration={this.props.time}
                     key={this.props.num}
                     colors='#ff1505'
-                    isPlaying
+                    isPlaying = {this.props.start}
                     children={this.children}
                     onComplete={this.props.onComplete}
                 />

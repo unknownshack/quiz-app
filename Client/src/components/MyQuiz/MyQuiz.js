@@ -30,6 +30,9 @@ function MyQuiz(props) {
     const [myAnswers, setmyAnswers] = useState([]);
     const [myQuestions, setmyQuestions] = useState([]);
 
+
+    const [startTimer, setstartTimer] = useState(false);
+
     const Quiz_id = location.pathname.split("/")[2];
 
     const [showQuestions, setshowQuestions] = useState(true);
@@ -144,6 +147,7 @@ function MyQuiz(props) {
                 Answer: answer,
             })
         })
+        .then(getAnswers())
     }
 
 
@@ -155,7 +159,6 @@ function MyQuiz(props) {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 Quiz_id: Quiz_id,
-
             })
         })
             .then(res => res.json())
@@ -164,7 +167,7 @@ function MyQuiz(props) {
                 setmyAnswers(data.answer);
                 //console.log(data.answer);
                 console.log(myQuestions);
-                
+                setshowQuestions(false);
                 //showResult = true;
             });
     }
@@ -173,24 +176,27 @@ function MyQuiz(props) {
         //let nextQuestion = generateRandomQuestion(); // questionlist[questionnumber+1]
 
         //uploadAnswer(transcriptRef.current);
-
+        setstartTimer(false);
         if (questionNumber < 9) {
             let questionTime = handleQuestionDifficulty();
             setcurrentQuestionTime(questionTime);
+            //transcriptRef.current = "";
             setquestionNumber(questionNumber + 1);
             setanswerStyle('btn border border-light answer');
 
             //uploadAnswer(transcriptRef.current);
         } else {
 
-            getAnswers();
 
+            //getAnswers();
+            //这里应该上传最后一个答案
             //showQuestions = false;
-            setshowQuestions(false);
+            //setshowQuestions(false);
+   
             //console.log("get answers");
             //getAnswers();
 
-            //uploadAnswer(transcriptRef.current);
+            uploadAnswer(transcriptRef.current);
             //let s = Quiz_id;
             //s = "/myresult/"+s;
             //navigate(s);
@@ -252,14 +258,17 @@ function MyQuiz(props) {
                     <h2>My Quiz Page</h2>
 
                     <div>
-                        <TimerContainer num={questionNumber} time={30} onComplete={() => toNextQuestion()} />
-                        <p>Question {questionNumber + 1} of 5 </p>
+                        <TimerContainer num={questionNumber} time={3} start = {startTimer} onComplete={() => toNextQuestion()} />
+
+
+
+                        <p>Question {questionNumber + 1} of 10 </p>
                         {/* <h5>Points: {this.state.totalPoints}</h5> */}
 
                         <div className='container'>
                             <div className='question-section'>
                                 {/* If the question is vocal question type */}
-                                {currentQuestion.isVocalQuestion && <TextToSpeech text={currentQuestion.questionText} />}
+                                {currentQuestion.isVocalQuestion && <TextToSpeech text={currentQuestion.questionText} onEnd = {()=>setstartTimer(true)} />}
 
 
                                 {/* If question has image */}
@@ -289,8 +298,9 @@ function MyQuiz(props) {
 
                             <div className='answer-section'>
                                 {/* If question is a vocal question */}
-                                {currentQuestion.isVocalQuestion && <SpeechRecog transcriptRef={transcriptRef} />}
+                                {currentQuestion.isVocalQuestion && <SpeechRecog transcriptRef={transcriptRef} start = {startTimer}/>}
 
+      
 
                                 {/* If answer has image in it */}
                                 {currentQuestion.questionImg && shuffleArray(currentQuestion.answers).map((answer, index) => (
@@ -382,8 +392,6 @@ function MyQuiz(props) {
                 <Else>
 
                     <h2>My result page</h2>
-                    <p>{myAnswers}</p>
-
 
                     <ul>
 
@@ -392,12 +400,11 @@ function MyQuiz(props) {
                             <li key = {index}>
                                 <p>Question {index + 1}</p>
                                 <p>{question.questionText}</p>
+                                <ul>
                                 {question.answers.map((answer,i)=>(
-
 
                                     <li key = {i}>
                                         
-
                                         <If condition = {answer.isCorrect == true}>
 
                                             <Then><h5>{answer.answerText}</h5></Then>
@@ -407,6 +414,7 @@ function MyQuiz(props) {
                                     </li>
 
                                 ))}
+                                </ul>
 
                                 <p>my answer is : {myAnswers[index]}</p>
 

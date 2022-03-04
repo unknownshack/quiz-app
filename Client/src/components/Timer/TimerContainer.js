@@ -9,6 +9,7 @@ class TimerContainer extends React.Component {
                 <Timer
                     time={this.props.time}
                     num={this.props.num}
+                    start = {this.props.start}
                     onComplete={this.props.onComplete}
                 />
             </div>

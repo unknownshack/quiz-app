@@ -16,13 +16,14 @@ class TextToSpeech extends React.Component {
         // After the question is read
         utterThis.onend = e => {
             console.log('Question read');
+            this.props.onEnd();
         };
 
         // If there's an error
         //utterThis.onerror = e => console.error('An error encountered');
         utterThis.onerror = e => console.log(e);
         // Set rate and pitch for reader's voice
-        utterThis.rate = 1.25;
+        utterThis.rate = 1; //1.25
         utterThis.pitch = 1;
 
         // Start reading the screen (question)

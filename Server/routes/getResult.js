@@ -9,8 +9,14 @@ var urlencodedParser = bodyParser.urlencoded({ extended: false })
 router.post('/', urlencodedParser, function (req, res, next) {
 
 
+
+
     let quiz_id = req.body.Quiz_id;
-    console.log(quiz_id);
+ 
+
+
+
+
 
     Quiz.find({ _id: quiz_id })
     .then(docs => {
