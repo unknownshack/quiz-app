@@ -27,8 +27,8 @@ router.post('/', urlencodedParser, function(req, res, next) {
         _id: new mongoose.Types.ObjectId(),
         userID:userID,
         Date:Date.now(),
-        //questionList:getRandomQuestions(10,100),        //! set to random later
-        questionList:[0,1,2,3,4,5,6,7,8,9], 
+        //questionList:getRandomQuestions(0,100),        //! set to random later
+        questionList:[0,110,57,3,73,5,81,84,8,9], 
       });
       // save quiz into database
       quiz

@@ -58,7 +58,7 @@ let questions = [{
       {
         answerText: "Uno",
         answerImg: "",
-        isCorrect: true,
+        isCorrect: false,
       },
     ],
   },

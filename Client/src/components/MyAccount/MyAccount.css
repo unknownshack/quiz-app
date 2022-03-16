@@ -1,4 +1,15 @@
-.clearbtn 
+.dashboard{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    background-color: rgba(74, 11, 133, 0.363);
+    border-radius: 5%;
+    padding: 3%;
+}
+.myacbtn 
 {
     justify-content: center;
     align-items: center;

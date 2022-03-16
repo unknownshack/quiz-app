@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import './Canvas.css'
 
 function Canvas() {
     const canvasRef = useRef(null);
@@ -61,7 +62,7 @@ function Canvas() {
                 ref={canvasRef}
                 style={{border: '1px solid white'}}
             />
-            <button className='btn btn-secondary' onClick={clear}>Clear</button>
+            <button className='btn-secondary clearbtn' onClick={clear}>Clear</button>
         </div>
     )
 }

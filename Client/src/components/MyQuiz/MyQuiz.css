@@ -1,0 +1,35 @@
+.quiz{
+    text-align: center;
+    
+}
+.quiz >h2{
+    padding-top:30px;
+}
+.answer-section{
+    width: 50%;
+}
+.answer-section >button {
+    padding: 10px;
+    display: inline-flex;
+}
+.result >ul{
+    list-style-type: none;
+    text-align: left;
+    padding: 3%;
+}
+.ans{
+    margin-left:30px;
+    display: inline-flex;
+}
+.correct-ans{
+    color:green;
+}
+
+.result_slot{
+
+    border: 3px rgb(50, 39, 68);
+    border-bottom-style: double;
+    padding: 1%;
+    padding-left: 3%;
+    margin: 1%;
+}

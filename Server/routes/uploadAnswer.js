@@ -27,6 +27,12 @@ router.post('/', urlencodedParser, function (req, res, next) {
                 }
         }
     )
+    .then(result=>{
+
+        console.log(result);
+        res.send({message: "successful"});
+
+    })
     .catch(err => {
         console.log(err);
     });

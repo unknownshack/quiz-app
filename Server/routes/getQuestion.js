@@ -51,15 +51,6 @@ router.post('/', urlencodedParser, function (req, res, next) {
                     .then(ques => {
 
                         var currentQuestion = ques[0];
-                        
-                        /*
-                        for(i in currentQuestion.answers){
-                            currentQuestion.answers[i].isCorrect = false;
-                        
-                        }*/
-
-                        //console.log(currentQuestion);
-                        //console.log(currentQuestion);
 
                         res.send(currentQuestion);
 

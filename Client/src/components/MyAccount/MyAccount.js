@@ -5,7 +5,7 @@ import React from 'react';
 import { selectUser } from "../redux/userSlice";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-
+import './MyAccount.css'
 // My account page
 function MyAccount(props) {
 
@@ -44,14 +44,17 @@ function MyAccount(props) {
 
     return (
 
-        <div>
+        <div class="dashboard">
 
-            <p>My Account Page</p>
-            <p>my id is：{user.uid}</p>
-      
-            <button onClick={(e) => createQuiz(e)} type="button" id="registerBtn" className='buttons btn-primary btn'>
-                StartQuiz
+            <h4>My Account Page</h4>
+            <p>USER ID：{user.uid}</p>
+            <br/>
+            <h5>Press the button below to start quiz.</h5>
+            <br/>
+            <button onClick={(e) => createQuiz(e)} type="button" id="registerBtn" className='btn-primary myacbtn'>
+                Start Quiz
             </button>
+
         </div>
 
     )

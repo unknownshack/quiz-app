@@ -22,6 +22,10 @@ export default function SpeechRecog({transcriptRef, start}) {
     useEffect(()=>{
 
         setListening(start)
+        if(start){
+
+            setTranscript("");
+        }
 
     },[start])
 
@@ -125,7 +129,6 @@ useEffect(() => {
             {isListening ? <p>Listening</p> : <p>Not listening</p>}
 
 
-            <p>You answered: {transcript}</p>
         </div>
     );
 }

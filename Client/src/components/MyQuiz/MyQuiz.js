@@ -2,7 +2,7 @@ import React from 'react';
 import { useLocation } from 'react-router-dom'
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { If, Then , Elseif,Else } from 'react-if-elseif-else-render';
+import { If, Then, Elseif, Else } from 'react-if-elseif-else-render';
 import '../Quiz/Quiz.css';
 //import questions from '../Quiz/Questions';
 import TimerContainer from '../Timer/TimerContainer';
@@ -13,6 +13,8 @@ import TextToSpeech from '../TextToSpeech/TextToSpeech';
 import SpeechRecog from '../SpeechRecog/SpeechRecog';
 // Drawing feature component
 import Canvas from '../Canvas/Canvas';
+import './MyQuiz.css'
+
 
 
 
@@ -71,9 +73,10 @@ function MyQuiz(props) {
             .then(data => {
 
                 //console.log("set Question");
-                setmyQuestions([...myQuestions,data]);
+                setmyQuestions([...myQuestions, data]);
+                transcriptRef.current = "";
                 setcurrentQuestion(data);
-                console.log(myQuestions);
+                //console.log(myQuestions);
 
             })
             .catch(err => {
@@ -85,7 +88,7 @@ function MyQuiz(props) {
 
     useEffect(() => {
 
-        //console.log("getting question");
+        console.log("my answer is: " + transcriptRef.current);
         //console.log(questionNumber);
         getQuestion();
 
@@ -147,7 +150,12 @@ function MyQuiz(props) {
                 Answer: answer,
             })
         })
-        .then(getAnswers())
+            .then(res => res.json())
+            .then(data=>{
+                
+                getAnswers();
+            
+            })
     }
 
 
@@ -166,7 +174,7 @@ function MyQuiz(props) {
                 //console.log(data);
                 setmyAnswers(data.answer);
                 //console.log(data.answer);
-                console.log(myQuestions);
+                //console.log(myQuestions);
                 setshowQuestions(false);
                 //showResult = true;
             });
@@ -192,7 +200,7 @@ function MyQuiz(props) {
             //这里应该上传最后一个答案
             //showQuestions = false;
             //setshowQuestions(false);
-   
+
             //console.log("get answers");
             //getAnswers();
 
@@ -248,27 +256,25 @@ function MyQuiz(props) {
 
 
 
-
     return (
 
-        <div>
+        <div className="quiz">
 
-            <If condition = {showQuestions == true}>
+            <If condition={showQuestions == true}>
                 <Then>
                     <h2>My Quiz Page</h2>
 
-                    <div>
-                        <TimerContainer num={questionNumber} time={3} start = {startTimer} onComplete={() => toNextQuestion()} />
-
-
-
-                        <p>Question {questionNumber + 1} of 10 </p>
-                        {/* <h5>Points: {this.state.totalPoints}</h5> */}
-
+                    <div className="question">
                         <div className='container'>
+                            <TimerContainer num={questionNumber} time={3} start={startTimer} onComplete={() => toNextQuestion()} />
+
+                            <p>Question {questionNumber + 1} of 10 </p>
+                            {/* <h5>Points: {this.state.totalPoints}</h5> */}
+
+
                             <div className='question-section'>
                                 {/* If the question is vocal question type */}
-                                {currentQuestion.isVocalQuestion && <TextToSpeech text={currentQuestion.questionText} onEnd = {()=>setstartTimer(true)} />}
+                                {currentQuestion.isVocalQuestion && <TextToSpeech text={currentQuestion.questionText} onEnd={() => setstartTimer(true)} />}
 
 
                                 {/* If question has image */}
@@ -298,15 +304,15 @@ function MyQuiz(props) {
 
                             <div className='answer-section'>
                                 {/* If question is a vocal question */}
-                                {currentQuestion.isVocalQuestion && <SpeechRecog transcriptRef={transcriptRef} start = {startTimer}/>}
+                                {currentQuestion.isVocalQuestion && <SpeechRecog transcriptRef={transcriptRef} start={startTimer} />}
 
-      
 
                                 {/* If answer has image in it */}
                                 {currentQuestion.questionImg && shuffleArray(currentQuestion.answers).map((answer, index) => (
                                     <button
                                         type='button'
                                         className={answerStyle}
+                                        class="answer"
                                         key={index}
                                         onClick={() => handleAnswerClick(answer)}
                                         style={{
@@ -355,35 +361,36 @@ function MyQuiz(props) {
                                 {/* If question is short-answer type */}
                                 {/* {currentQuestion.isShortAnswer && <textarea style={{margin: 10}}></textarea>} */}
 
+                            </div>
 
-                                {/* If question is drawing type */}
-                                {currentQuestion.isDrawingQuestion && <Canvas />}
+                            {/* If question is drawing type */}
+                            {currentQuestion.isDrawingQuestion && <Canvas />}
 
+                 
+                            {/* If question is yes/no, or short-answer, or drawing type */}
+                            {/* {(
+                                    currentQuestion.isVocalQuestion ||
+                                    currentQuestion.isForcedAnswer ||
+                                    currentQuestion.isShortAnswer ||
+                                    currentQuestion.isDrawingQuestion
+                                ) &&
+                                    <button
+                                        type='button'
+                                        className='btn btn-primary'
+                                        onClick={this.toNextQuestion}
+                                    >
+                                        Next
+                                    </button>
+                                } */}
 
-                                {/* If question is yes/no, or short-answer, or drawing type */}
-                                {/* {(
-                            currentQuestion.isVocalQuestion ||
-                            currentQuestion.isForcedAnswer ||
-                            currentQuestion.isShortAnswer ||
-                            currentQuestion.isDrawingQuestion
-                        ) &&
                             <button
                                 type='button'
                                 className='btn btn-primary'
-                                onClick={this.toNextQuestion}
+                                onClick={() => toNextQuestion()}
                             >
                                 Next
                             </button>
-                        } */}
 
-                                <button
-                                    type='button'
-                                    className='btn btn-primary'
-                                    onClick={() => toNextQuestion()}
-                                >
-                                    Next
-                                </button>
-                            </div>
                         </div>
                     </div>
 
@@ -391,47 +398,47 @@ function MyQuiz(props) {
 
                 <Else>
 
-                    <h2>My result page</h2>
+                    <div className = "result">
+                        <br/>
+                        <h2>Quiz Result</h2>
 
-                    <ul>
+                        <ul>
 
-                        {myQuestions.map((question,index)=>(
+                            {myQuestions.map((question, index) => (
 
-                            <li key = {index}>
-                                <p>Question {index + 1}</p>
-                                <p>{question.questionText}</p>
-                                <ul>
-                                {question.answers.map((answer,i)=>(
+                                <li key={index} className="result_slot">
+                                    <p>Question {index + 1}</p>
+                                    <p>{question.questionText}</p>
+                                    <ul>
+                                        {question.answers.map((answer, i) => (
 
-                                    <li key = {i}>
-                                        
-                                        <If condition = {answer.isCorrect == true}>
+                                            <li key={i} class="ans">
 
-                                            <Then><h5>{answer.answerText}</h5></Then>
-                                            <Else><p>{answer.answerText}</p></Else>
-                                        </If>
-                                      
-                                    </li>
+                                                <If condition={answer.isCorrect == true}>
 
-                                ))}
-                                </ul>
+                                                    <Then><h5 class="correct-ans">{answer.answerText}</h5></Then>
+                                                    <Else><p>{answer.answerText}</p></Else>
+                                                </If>
 
-                                <p>my answer is : {myAnswers[index]}</p>
+                                            </li>
 
-                            </li>
-                        ))}
+                                        ))}
+                                    </ul>
 
-                    </ul>
+                                    <p><b>my answer is :</b><span class="your-ans"> {myAnswers[index]}</span></p>
+
+                                </li>
+                            ))}
+
+                        </ul>
+                    </div>
                 </Else>
             </If>
         </div>
 
     )
 
-
-
 }
 
 export default MyQuiz;
 
-//读太快了 ， 不同的时间，把next取消，
