@@ -1,5 +1,10 @@
-import React, { useState, useEffect } from 'react';
+/**
+ * This script is used for short answer questions.
+ * It will record spoken answers.
+ * 
+ */
 
+import React, { useState, useEffect } from 'react';
 const SpeechRecognition = window.webkitSpeechRecognition || window.SpeechRecognition;
 const mic = new SpeechRecognition();
 mic.continuous = true;
@@ -10,7 +15,6 @@ export default function SpeechRecog({transcriptRef, start}) {
     const [isListening, setListening] = useState(false);
     const [transcript, setTranscript] = useState(null);
 
-
     useEffect(()=>{
 
         transcriptRef.current = transcript;
@@ -18,7 +22,7 @@ export default function SpeechRecog({transcriptRef, start}) {
     },[transcript])
 
 
-    
+    // start recording after reading QuestionText
     useEffect(()=>{
 
         setListening(start)
@@ -66,12 +70,11 @@ export default function SpeechRecog({transcriptRef, start}) {
 
 
     /*
+    below are obsolate functions that connect the recording function to a button.
 
-useEffect(() => {
+    useEffect(() => {
         clickCallback();
     }, [isListening])
-
-
 
     const clickCallback = () => {
         if (isListening) {
@@ -104,7 +107,6 @@ useEffect(() => {
 
     }
     
-    
     // previous button 
     
                 <button
@@ -120,17 +122,13 @@ useEffect(() => {
                 Answer
             </button>
     
-    
-    
     */
 
     return (
         <div>
             {isListening ? <p>Listening</p> : <p>Not listening</p>}
-
+            <p>Please answer the question through speaking</p>
 
         </div>
     );
 }
-
-//export default SpeechRecog;

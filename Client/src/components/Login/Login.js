@@ -1,4 +1,6 @@
-
+/**
+ * login page
+ */
 import React from 'react';
 import { useState, useEffect } from "react";
 import logo from '../Home/mettel-logo.png';
@@ -8,7 +10,6 @@ import { login } from "../redux/userSlice";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-// The login page
 function Login(props) {
 
     const [Email, setEmail] = useState("");
@@ -32,9 +33,6 @@ function Login(props) {
         })
 
             .then(res => res.json())
-            //.then(data => console.log(data))
-            //.then(res=>console.log(res.message))
-            //.then(data => this.setState({ loginMessage: data }));
             .then(data => {
                 if (data.message) {
 

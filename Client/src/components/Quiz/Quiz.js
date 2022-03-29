@@ -1,5 +1,10 @@
-import React from 'react';
+/**
+ * This page connected with demo button on the Navbar
+ * This page is obsolate that it only retrives questions using Front-end only.
+ * However, it contains funxtions that may be useful for later developing.
+ */
 
+import React from 'react';
 import './Quiz.css';
 import questions from './Questions';
 import TimerContainer from '../Timer/TimerContainer';

@@ -1,3 +1,4 @@
+//Timer for all questions
 import React from 'react';
 import { CountdownCircleTimer } from 'react-countdown-circle-timer';
 import './Timer.css';

@@ -1,3 +1,8 @@
+/*
+This script is used to handle drawing questions.
+It allow user to draw on canvas.
+*/
+
 import React, { useEffect, useRef, useState } from 'react';
 import './Canvas.css'
 
@@ -9,7 +14,6 @@ function Canvas() {
     useEffect(() => {
         const canvas = canvasRef.current;
         canvas.width = window.innerWidth*0.7;
-
         canvas.height = window.innerHeight;
 
         //canvas.style.width = `${canvas.width - 300}px`;

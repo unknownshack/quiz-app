@@ -1,12 +1,10 @@
-
-
-
+// My account page
 import React from 'react';
 import { selectUser } from "../redux/userSlice";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import './MyAccount.css'
-// My account page
+
 function MyAccount(props) {
 
 

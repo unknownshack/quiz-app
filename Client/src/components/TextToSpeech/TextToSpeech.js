@@ -1,5 +1,9 @@
-import React from 'react';
+/**
+ * This script is used for all vocal questions that a robot will read the questionText
+ * 
+ */
 
+import React from 'react';
 import SpeechRecog from '../SpeechRecog/SpeechRecog';
 
 class TextToSpeech extends React.Component {
@@ -22,8 +26,9 @@ class TextToSpeech extends React.Component {
         // If there's an error
         //utterThis.onerror = e => console.error('An error encountered');
         utterThis.onerror = e => console.log(e);
+
         // Set rate and pitch for reader's voice
-        utterThis.rate = 1; //1.25
+        utterThis.rate = 1; 
         utterThis.pitch = 1;
 
         // Start reading the screen (question)

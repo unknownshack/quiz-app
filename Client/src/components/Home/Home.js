@@ -1,6 +1,4 @@
 import React from 'react';
-
-//import './Home.css';
 import logo from './mettel-logo.png';
 import Register from '../Register/Register';
 import './Home.css';

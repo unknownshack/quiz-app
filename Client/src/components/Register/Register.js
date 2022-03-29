@@ -1,3 +1,4 @@
+//register page
 import React from 'react';
 import { useState } from "react";
 import './Register.css';
@@ -8,7 +9,7 @@ function Register(props) {
     const [Mobile, setMobile] = useState("");
     const [Email, setEmail] = useState("");
     const [Callback, setCallback] = useState("true");
-    //const [resMessage, setresMessage] = useState("");
+
 
     //Register function
     const callRegister = (e) => {
@@ -25,7 +26,6 @@ function Register(props) {
         })
 
             .then(res => res.json())
-            //.then(data => setresMessage(data.message));
             .then(data => alert(data.message));  
     }
 

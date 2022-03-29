@@ -32,7 +32,7 @@ function MyQuiz(props) {
     const [showQuestions, setshowQuestions] = useState(true);
 
 
-
+    // Get next question and upload answer of last question
     const getQuestion = () => {
 
         fetch("http://localhost:8000/getQuestion", {
@@ -47,8 +47,7 @@ function MyQuiz(props) {
             .then(res => res.json())
             .then(data => {
 
-                setmyQuestions([...myQuestions, data]);
-
+                setmyQuestions([...myQuestions, data]);       
                 transcriptRef.current = "";
                 setcurrentQuestion(data);
                 let questionTime = handleQuestionDifficulty();
@@ -61,7 +60,7 @@ function MyQuiz(props) {
 
     }
 
-
+    //call getQuestion when questionNumber changes
     useEffect(() => {
 
         console.log("my answer is: " + transcriptRef.current);
@@ -70,6 +69,7 @@ function MyQuiz(props) {
     }, [questionNumber]);
 
 
+    //Can shuffle an array of answers
     const shuffleArray = (array) => {
         let arrCopy = array.slice(0);
         for (let i = arrCopy.length - 1; i > 0; i--) {
@@ -80,27 +80,10 @@ function MyQuiz(props) {
     }
 
 
-    // Handler for when an answer is clicked
+    //Handler for when an answer is clicked
     const handleAnswerClick = (answer) => {
 
-        //let nextQuestion = index; // questionlist[questionnumber+1]
-        //let questionNum = questionNumber + 1;
-
-        // Check if answer clicked is correct
-        //checkAnswer(answer);
-
-        // Automatically moves to the next question after a delay
-        /*
-        setTimeout(() => {
-            if (questionNumber < 10) {
-                setquestionNumber(questionNumber + 1);
-                setanswerStyle('btn border border-light answer');
-
-            }
-        }, 500);*/
         transcriptRef.current = answer.answerText;
-
-
     }
 
     /*
@@ -115,6 +98,7 @@ function MyQuiz(props) {
     }
     */
 
+    //Upload the last answer of the quiz then call getAnswers to get all answers of the quiz 
     const uploadAnswer = (answer) => {
 
         fetch("http://localhost:8000/uploadAnswer", {
@@ -135,7 +119,7 @@ function MyQuiz(props) {
     }
 
 
-
+    // Get all answers of the quiz
     const getAnswers = () => {
 
         fetch("http://localhost:8000/getResult", {
@@ -154,15 +138,17 @@ function MyQuiz(props) {
             });
     }
 
-    const toNextQuestion = () => {
 
+    // Add question number + 1 to go to next question 
+    const toNextQuestion = () => {
+        
+        //do not allow go to next question when reading questionText
         if(currentQuestion.isVocalQuestion){
 
             if(startTimer){
                 setstartTimer(false);
                 if (questionNumber < 9) {      
                     setquestionNumber(questionNumber + 1);
-                    //setanswerStyle('btn border border-light answer');
         
                 } else {       
                     uploadAnswer(transcriptRef.current);        
@@ -171,8 +157,7 @@ function MyQuiz(props) {
         }else{
             setstartTimer(false);
             if (questionNumber < 9) {  
-                setquestionNumber(questionNumber + 1);
-                //setanswerStyle('btn border border-light answer');    
+                setquestionNumber(questionNumber + 1); 
             } else {   
                 uploadAnswer(transcriptRef.current);  
             }
@@ -203,7 +188,6 @@ function MyQuiz(props) {
         //console.log(`${difficulty}: ${time}`);
         return time;
     }
-//onComplete={() => toNextQuestion()}
 
 
     return (

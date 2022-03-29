@@ -1,4 +1,4 @@
-// Use React Hooks' useState
+//NavBar
 import React from 'react';
 import { Link, Outlet } from 'react-router-dom';
 import { useState, useEffect } from "react";
@@ -12,7 +12,6 @@ const Navbar = () => {
 
     const [isOpen, setisOpen] = useState(false);
     const [user,setuser] = useState(useSelector(selectUser));
-    //const user = useSelector(selectUser);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -40,7 +39,7 @@ const Navbar = () => {
     }
 
 
-    //this function run immediately after refresh, stay logged in
+    //this function run immediately after refresh, to let user stay logged in after refresh
     useEffect(() => {
 
         if(localStorage.getItem("loginData") ){
