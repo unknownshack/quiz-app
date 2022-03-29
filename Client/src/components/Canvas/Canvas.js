@@ -8,10 +8,12 @@ function Canvas() {
 
     useEffect(() => {
         const canvas = canvasRef.current;
-        canvas.width = window.innerWidth;
+        canvas.width = window.innerWidth*0.7;
+
         canvas.height = window.innerHeight;
-        canvas.style.width = `${canvas.width - 300}px`;
-        canvas.style.height = `${canvas.height}px`;
+
+        //canvas.style.width = `${canvas.width - 300}px`;
+        //canvas.style.height = `${canvas.height}px`;
 
         // Context to draw on canvas
         const context = canvas.getContext('2d');
@@ -54,13 +56,14 @@ function Canvas() {
 
 
     return (
-        <div>
+        <div className='canvasWrap'>
             <canvas
                 onMouseDown={startDrawing}
                 onMouseUp={finishDrawing}
                 onMouseMove={draw}
                 ref={canvasRef}
-                style={{border: '1px solid white'}}
+                style={{border: '1px solid white'
+            }}
             />
             <button className='btn-secondary clearbtn' onClick={clear}>Clear</button>
         </div>

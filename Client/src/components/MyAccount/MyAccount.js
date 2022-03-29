@@ -44,7 +44,7 @@ function MyAccount(props) {
 
     return (
 
-        <div class="dashboard">
+        <div className="dashboard">
 
             <h4>My Account Page</h4>
             <p>USER ID：{user.uid}</p>

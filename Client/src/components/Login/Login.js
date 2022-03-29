@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { useState, useEffect } from "react";
-import logo from '../Home/updated-aiq-logo.png';
+import logo from '../Home/mettel-logo.png';
 import './Login.css';
 import Register from '../Register/Register';
 import { login } from "../redux/userSlice";
@@ -76,10 +76,10 @@ function Login(props) {
     return (
 
         <div className='banner'>
-            <img src={logo} className='aiqLogo' alt='AIQ Logo' />
+            <img src={logo} className='mettellogo' alt='mettel Logo' />
 
             <div className='login-wrap'>
-
+                <h3>LOGIN</h3>
                 <div className='login-items'>
                     <input onChange={(e) => setEmail(e.target.value)} value={Email} type='email' name='email' id='email' placeholder='Email' />
                 </div>
@@ -88,19 +88,23 @@ function Login(props) {
                 </div>
 
                 <div className='login-items'>
-                    <p>login message:{loginMessage.message}</p>
-                </div>
-
-                <div className='login-items'>
                     <button onClick={(e) => callLogin(e)} type="button" id="registerBtn" className='buttons btn-primary btn'>
                         Login
                     </button>
                 </div>
+                
+                <div className='login-items'>
+                    <p>login message:{loginMessage.message}</p>
+                </div>
+
+
             </div>
 
-            <div className='buttons'>
+            <div className='login-buttons'>
                 <Register />
+
             </div>
+
 
         </div>
     )

@@ -1,13 +1,8 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom'
 import { useState, useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
 import { If, Then, Elseif, Else } from 'react-if-elseif-else-render';
-import '../Quiz/Quiz.css';
-//import questions from '../Quiz/Questions';
 import TimerContainer from '../Timer/TimerContainer';
-import Register from '../Register/Register';
-
 // Voice features components
 import TextToSpeech from '../TextToSpeech/TextToSpeech';
 import SpeechRecog from '../SpeechRecog/SpeechRecog';
@@ -17,46 +12,26 @@ import './MyQuiz.css'
 
 
 
-
 // MyQuiz page
 function MyQuiz(props) {
 
     const location = useLocation();
-    const navigate = useNavigate();
+    let transcriptRef = useRef();
     //const [gameOver, setgameOver] = useState(false);
+    //const [ totalPoints, settotalPoints] = useState(0);
     const [currentQuestion, setcurrentQuestion] = useState({});
     const [currentQuestionTime, setcurrentQuestionTime] = useState(4);
     const [questionNumber, setquestionNumber] = useState(0);
-    //const [ totalPoints, settotalPoints] = useState(0);
-    const [answerStyle, setanswerStyle] = useState("btn border border-light border-2 answer");
+    const [answerStyle, setanswerStyle] = useState("btn btn-outline-success border border-light border-2 answer");
     const [myAnswers, setmyAnswers] = useState([]);
     const [myQuestions, setmyQuestions] = useState([]);
-
-
     const [startTimer, setstartTimer] = useState(false);
 
     const Quiz_id = location.pathname.split("/")[2];
 
     const [showQuestions, setshowQuestions] = useState(true);
 
-    let transcriptRef = useRef();
 
-    /*
-    const generateRandomQuestion = ()=> {
-        let min = 0;
-        let max = questions.length;
-        let index = Math.floor(Math.random() * (max - min) + min);
-
-        if (questions[index].hasBeenAsked === false) {
-            // Set the question hasBeenAsked property to true so it doesn't get selected again
-            questions[index].hasBeenAsked = true;
-            return index;
-        } else {
-            index = questions.findIndex((q) => q.hasBeenAsked === false);
-            questions[index].hasBeenAsked = true;
-        }
-        return index;
-    }*/
 
     const getQuestion = () => {
 
@@ -72,11 +47,12 @@ function MyQuiz(props) {
             .then(res => res.json())
             .then(data => {
 
-                //console.log("set Question");
                 setmyQuestions([...myQuestions, data]);
+
                 transcriptRef.current = "";
                 setcurrentQuestion(data);
-                //console.log(myQuestions);
+                let questionTime = handleQuestionDifficulty();
+                setcurrentQuestionTime(questionTime);
 
             })
             .catch(err => {
@@ -89,7 +65,6 @@ function MyQuiz(props) {
     useEffect(() => {
 
         console.log("my answer is: " + transcriptRef.current);
-        //console.log(questionNumber);
         getQuestion();
 
     }, [questionNumber]);
@@ -115,17 +90,21 @@ function MyQuiz(props) {
         //checkAnswer(answer);
 
         // Automatically moves to the next question after a delay
+        /*
         setTimeout(() => {
             if (questionNumber < 10) {
                 setquestionNumber(questionNumber + 1);
                 setanswerStyle('btn border border-light answer');
 
             }
-        }, 500);
+        }, 500);*/
+        transcriptRef.current = answer.answerText;
+
+
     }
 
-    // Checks if answer is correct
     /*
+    // Checks if answer is correct
     const checkAnswer = (answer)=> {
         let newTotal = answer.isCorrect ? totalPoints + 1 : totalPoints;
         let isCorrect = answer.isCorrect ? 'btn btn-success border border-light answer' : 'btn btn-danger border border-light answer';
@@ -134,12 +113,9 @@ function MyQuiz(props) {
         setanswerStyle(isCorrect);
    
     }
-*/
+    */
 
     const uploadAnswer = (answer) => {
-
-        //console.log("current transcript Ref is");
-        //console.log(answer);         
 
         fetch("http://localhost:8000/uploadAnswer", {
             method: 'POST',
@@ -171,63 +147,37 @@ function MyQuiz(props) {
         })
             .then(res => res.json())
             .then(data => {
-                //console.log(data);
+
                 setmyAnswers(data.answer);
-                //console.log(data.answer);
-                //console.log(myQuestions);
                 setshowQuestions(false);
-                //showResult = true;
+
             });
     }
 
     const toNextQuestion = () => {
-        //let nextQuestion = generateRandomQuestion(); // questionlist[questionnumber+1]
 
-        //uploadAnswer(transcriptRef.current);
-        setstartTimer(false);
-        if (questionNumber < 9) {
-            let questionTime = handleQuestionDifficulty();
-            setcurrentQuestionTime(questionTime);
-            //transcriptRef.current = "";
-            setquestionNumber(questionNumber + 1);
-            setanswerStyle('btn border border-light answer');
+        if(currentQuestion.isVocalQuestion){
 
-            //uploadAnswer(transcriptRef.current);
-        } else {
-
-
-            //getAnswers();
-            //这里应该上传最后一个答案
-            //showQuestions = false;
-            //setshowQuestions(false);
-
-            //console.log("get answers");
-            //getAnswers();
-
-            uploadAnswer(transcriptRef.current);
-            //let s = Quiz_id;
-            //s = "/myresult/"+s;
-            //navigate(s);
-
+            if(startTimer){
+                setstartTimer(false);
+                if (questionNumber < 9) {      
+                    setquestionNumber(questionNumber + 1);
+                    //setanswerStyle('btn border border-light answer');
+        
+                } else {       
+                    uploadAnswer(transcriptRef.current);        
+                }
+            }
+        }else{
+            setstartTimer(false);
+            if (questionNumber < 9) {  
+                setquestionNumber(questionNumber + 1);
+                //setanswerStyle('btn border border-light answer');    
+            } else {   
+                uploadAnswer(transcriptRef.current);  
+            }
         }
     }
-
-
-    /*
-        // Method to call the above method when individual question timer completes
-        const handleNextQuestion = ()=> {
-            if (questionNumber > questions.length) {
-                handleGameOver();
-            }
-    
-            //toNextQuestion();
-        }*/
-
-    // Handler for game's over (time's up) or after last question's asked
-    /*
-    const handleGameOver = ()=> {
-        setgameOver(true);
-    }*/
 
 
     // Handler for different question difficulty
@@ -253,7 +203,7 @@ function MyQuiz(props) {
         //console.log(`${difficulty}: ${time}`);
         return time;
     }
-
+//onComplete={() => toNextQuestion()}
 
 
     return (
@@ -266,7 +216,7 @@ function MyQuiz(props) {
 
                     <div className="question">
                         <div className='container'>
-                            <TimerContainer num={questionNumber} time={3} start={startTimer} onComplete={() => toNextQuestion()} />
+                            <TimerContainer num={questionNumber} time={currentQuestionTime} start={startTimer} onComplete={() => toNextQuestion()} />
 
                             <p>Question {questionNumber + 1} of 10 </p>
                             {/* <h5>Points: {this.state.totalPoints}</h5> */}
@@ -304,7 +254,7 @@ function MyQuiz(props) {
 
                             <div className='answer-section'>
                                 {/* If question is a vocal question */}
-                                {currentQuestion.isVocalQuestion && <SpeechRecog transcriptRef={transcriptRef} start={startTimer} />}
+                                {currentQuestion.isVocalQuestion &&!currentQuestion.isMultipleChoice && <SpeechRecog transcriptRef={transcriptRef} start={startTimer} />}
 
 
                                 {/* If answer has image in it */}
@@ -312,7 +262,7 @@ function MyQuiz(props) {
                                     <button
                                         type='button'
                                         className={answerStyle}
-                                        class="answer"
+                                        
                                         key={index}
                                         onClick={() => handleAnswerClick(answer)}
                                         style={{
@@ -332,11 +282,12 @@ function MyQuiz(props) {
 
 
                                 {/* If question regular multiple choice */}
-                                {currentQuestion.isMultipleChoice && !currentQuestion.questionImg && shuffleArray(currentQuestion.answers).map((answer, index) => (
+                                {currentQuestion.isMultipleChoice && !currentQuestion.questionImg && currentQuestion.answers.map((answer, index) => (
                                     <button
                                         type='button'
                                         className={answerStyle}
                                         key={index}
+                                        onClick={() => handleAnswerClick(answer)}
                                     // onClick={() => this.handleAnswerClick(answer)}
                                     >
                                         {answer.answerText}
@@ -412,11 +363,11 @@ function MyQuiz(props) {
                                     <ul>
                                         {question.answers.map((answer, i) => (
 
-                                            <li key={i} class="ans">
+                                            <li key={i} className="ans">
 
                                                 <If condition={answer.isCorrect == true}>
 
-                                                    <Then><h5 class="correct-ans">{answer.answerText}</h5></Then>
+                                                    <Then><h5 className="correct-ans">{answer.answerText}</h5></Then>
                                                     <Else><p>{answer.answerText}</p></Else>
                                                 </If>
 
@@ -425,7 +376,7 @@ function MyQuiz(props) {
                                         ))}
                                     </ul>
 
-                                    <p><b>my answer is :</b><span class="your-ans"> {myAnswers[index]}</span></p>
+                                    <p><b>my answer is :</b><span className="your-ans"> {myAnswers[index]}</span></p>
 
                                 </li>
                             ))}

@@ -11,8 +11,8 @@
     flex-wrap: wrap;   
 }
 
-.aiqLogo {
-    width: 500px;
+.mettellogo {
+    width: 100;
     height: auto;
 }
 
@@ -28,19 +28,28 @@
     flex-wrap: wrap;
 }
 
+
 .login-wrap{
-
-
     position: absolute;
     left: 10%;
     top: 40%;
+    /*background-color: rgb(56, 112, 129);*/
+    background-color: rgba(77, 50, 102, 0.363);
+    border-radius: 3%;
+    
+}
 
-
+.login-wrap > h3{
+    margin-left: 70px;
+    margin-top:30px;
 }
 
 .login-items{
-
-    padding: 4%;
-
-
+padding-top: 10px;
+padding-left: 20px;
+padding-right: 30px;
+padding-bottom: 20px;
+}
+.login-buttons{
+    margin-left:3px !important;
 }
