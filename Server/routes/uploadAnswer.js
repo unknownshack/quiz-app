@@ -1,3 +1,5 @@
+// this page is used to upload the last answer of the quiz
+
 var express = require('express');
 var router = express.Router();
 var Question = require('../models/question.js');
@@ -37,8 +39,6 @@ router.post('/', urlencodedParser, function (req, res, next) {
         console.log(err);
     });
 
-
-    
 
 });
 

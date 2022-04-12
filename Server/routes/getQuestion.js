@@ -1,3 +1,4 @@
+// this page will upload the answer of last question and get a new question from DB
 var express = require('express');
 var router = express.Router();
 var Question = require('../models/question.js');

@@ -1,4 +1,7 @@
-var express = require('express');
+/**
+ * cd into current directory and run "node uploadQuestions" to run this script to upload questions into MongoDB database
+ * 
+ */
 
 var mongoose = require('mongoose');
 var Question = require('../models/question.js'); // get Question schema
@@ -46,7 +49,7 @@ for(const index in allQuestions){
     });
 }
 
-//
+
 
 
 

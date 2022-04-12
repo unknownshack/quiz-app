@@ -7,7 +7,6 @@ var Quiz = require('../models/quiz.js'); // get Quiz schema
 var bodyParser = require('body-parser');
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
-
 // generate a list of random quiz index
 function getRandomQuestions(quantity, max){
     const set = new Set();
@@ -17,7 +16,6 @@ function getRandomQuestions(quantity, max){
     }
     return Array.from(set);
   }
-
 
 router.post('/', urlencodedParser, function(req, res, next) {
 

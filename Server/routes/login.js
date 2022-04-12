@@ -27,7 +27,7 @@ router.post('/', urlencodedParser, function(req, res, next) {
 			.catch(err=>{
 				console.log(err);
 			});	
-			//res.end();
+	
 		
 	} else {
 		res.send({message:'Please enter Username and Password!'});
@@ -38,10 +38,6 @@ router.post('/', urlencodedParser, function(req, res, next) {
 
 });
 
-
-//router.get("/", function(req, res, next) {
- // res.send('respond with login');
-//});
   
 module.exports = router;
   

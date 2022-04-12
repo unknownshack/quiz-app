@@ -29,7 +29,6 @@ const Navbar = () => {
 
     }
 
-    
     const handleButtonClick = () => {
         if (isOpen) {
             setisOpen(false);
@@ -37,7 +36,6 @@ const Navbar = () => {
             setisOpen(true);
         }
     }
-
 
     //this function run immediately after refresh, to let user stay logged in after refresh
     useEffect(() => {
@@ -51,7 +49,6 @@ const Navbar = () => {
                 setuser(data);
             }
         }
-
     });
 
 
@@ -93,7 +90,7 @@ const Navbar = () => {
                                 <Link
                                     className='nav-link'
                                     aria-current="page"
-                                    to='/quiz'
+                                    to='/'
                                 >
                                     Demo
                                 </Link>

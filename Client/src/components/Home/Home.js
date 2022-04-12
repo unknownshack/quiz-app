@@ -11,7 +11,7 @@ function Home(props) {
         <div className='banner'>
             <img src={logo} className='mettellogo' alt='mettle Logo' />
             <div className='buttons'>
-                <button type="button" id="registerBtn" className="registerbtn btn-primary btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                <button type="button" id="registerBtn" className="btn registerbtn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                     Register your interest
                 </button>
                 <Register />
